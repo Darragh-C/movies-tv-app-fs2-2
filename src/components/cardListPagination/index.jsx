@@ -10,11 +10,16 @@ const styles = {
   }
 }
 
-export default function CardListPagination() {
+export default function CardListPagination(pagination) {
+
+  const handlePage = (e) => {
+    console.log("handlePage", e);
+  }
+
   return (
     <div style={styles.div}>
       <Stack spacing={2}>
-        <Pagination count={10} color="primary" />
+        <Pagination count={10} color="primary" onChange={handlePage} />
       </Stack>
     </div>
   );

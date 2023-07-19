@@ -64,7 +64,7 @@ function CardListPage({ movies, title, action }) {
     }
   });
 
-  const handleChange = (type, value) => {
+  const handleChange = (type, value, pagination) => {
     if (type === "title") {
       setTitleFilter(value);
     } else if (type === "genre") {
@@ -91,7 +91,7 @@ function CardListPage({ movies, title, action }) {
           />
         </Grid>
       </Grid>
-      <CardListPagination/>
+      <CardListPagination pagination={pagination}/>
       <Fab
         color="secondary"
         variant="extended"

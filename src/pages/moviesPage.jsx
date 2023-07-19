@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CardListPage from "../components/cardListPage";
 import { getMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
@@ -11,6 +11,13 @@ const MoviesPage = (props) => {
   context.setBasePath("movies");
   console.log(context.linkBasePath);
 
+  //const [page, setPage] = useState(1);
+
+  const handlePageChange = () => {
+    setPage();
+  }
+
+  // const { data, error, isLoading, isError } = useQuery("discover", () => getMovies(page));
   const { data, error, isLoading, isError } = useQuery("discover", getMovies);
 
   if (isLoading) {
@@ -31,6 +38,7 @@ const MoviesPage = (props) => {
     <CardListPage
       title="Discover Movies"
       movies={movies}
+      pagination={handlePageChange}
       action={(movie) => {
         return <AddToFavouritesIcon movie={movie} />
       }}
