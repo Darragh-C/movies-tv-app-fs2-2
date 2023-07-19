@@ -6,6 +6,7 @@ import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import CardList from "../cardList";
 import CardListHeaderInsert from "../headerInserts/cardListHeaderInsert";
+import CardListPagination from "../cardListPagination";
 
 const styles = {
   root: {
@@ -90,6 +91,7 @@ function CardListPage({ movies, title, action }) {
           />
         </Grid>
       </Grid>
+      <CardListPagination/>
       <Fab
         color="secondary"
         variant="extended"
