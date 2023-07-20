@@ -15,15 +15,15 @@ const MoviesPage = () => {
 
   const handlePageChange = (pageNum) => {
     console.log("handling page change", pageNum)
-    setPage(pageNum);
+    setPage(prevPage => pageNum);
   }
+
+  const { data, error, isLoading, isError, refetch } = useQuery("discover", () => getMovies(page));
+  // const { data, error, isLoading, isError } = useQuery("discover", getMovies);
 
   useEffect(() => {
     refetch();
   }, [page]);
-
-  const { data, error, isLoading, isError, refetch } = useQuery("discover", () => getMovies(page));
-  // const { data, error, isLoading, isError } = useQuery("discover", getMovies);
 
   if (isLoading) {
     return <Spinner />;
