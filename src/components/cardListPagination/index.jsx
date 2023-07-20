@@ -10,10 +10,11 @@ const styles = {
   }
 }
 
-export default function CardListPagination(pagination) {
+export default function CardListPagination({ onPagination }) {
 
   const handlePage = (e) => {
-    console.log("handlePage", e);
+    console.log("handlePage", e.target.textContent);
+    onPagination(parseInt(e.target.textContent));
   }
 
   return (

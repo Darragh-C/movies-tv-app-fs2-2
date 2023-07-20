@@ -1,4 +1,4 @@
-export const getMovies = (page = 1) => {
+export const getMovies = (page) => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
   ).then((response) => {

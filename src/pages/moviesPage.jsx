@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import CardListPage from "../components/cardListPage";
 import { getMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
@@ -6,19 +6,24 @@ import Spinner from "../components/spinner";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import { MoviesContext } from "../contexts/moviesContext";
 
-const MoviesPage = (props) => {
+const MoviesPage = () => {
   const context = useContext(MoviesContext);
   context.setBasePath("movies");
   console.log(context.linkBasePath);
 
-  //const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-  const handlePageChange = () => {
-    setPage();
+  const handlePageChange = (pageNum) => {
+    console.log("handling page change", pageNum)
+    setPage(pageNum);
   }
 
-  // const { data, error, isLoading, isError } = useQuery("discover", () => getMovies(page));
-  const { data, error, isLoading, isError } = useQuery("discover", getMovies);
+  useEffect(() => {
+    refetch();
+  }, [page]);
+
+  const { data, error, isLoading, isError, refetch } = useQuery("discover", () => getMovies(page));
+  // const { data, error, isLoading, isError } = useQuery("discover", getMovies);
 
   if (isLoading) {
     return <Spinner />;

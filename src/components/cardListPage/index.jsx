@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-function CardListPage({ movies, title, action }) {
+function CardListPage({ movies, title, action, pagination }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -64,7 +64,7 @@ function CardListPage({ movies, title, action }) {
     }
   });
 
-  const handleChange = (type, value, pagination) => {
+  const handleChange = (type, value) => {
     if (type === "title") {
       setTitleFilter(value);
     } else if (type === "genre") {
@@ -91,7 +91,7 @@ function CardListPage({ movies, title, action }) {
           />
         </Grid>
       </Grid>
-      <CardListPagination pagination={pagination}/>
+      <CardListPagination onPagination={pagination}/>
       <Fab
         color="secondary"
         variant="extended"
