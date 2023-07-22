@@ -35,6 +35,7 @@ const styles = {
 
 const CastMovieList = ( { movies } ) => {
   const context = useContext(MoviesContext);
+  console.log("context:", context)
   return (
     <>
       <br></br>
@@ -44,14 +45,24 @@ const CastMovieList = ( { movies } ) => {
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar src={m.poster_path 
-                  ? `https://image.tmdb.org/t/p/w500/${m.poster_path}` 
+                <Avatar src={m.backdrop_path 
+                  ? `https://image.tmdb.org/t/p/w500/${m.backdrop_path}` 
                   : img
                 } />
               </ListItemAvatar>
               <ListItemText
                 primary={m.title}
-                
+                secondary={
+                  <>
+                    <Typography component="span" variant="body2" color="textPrimary">
+                      {m.release_date.split("-")[0]}
+                    </Typography>
+                    <br />
+                    <Typography component="span" variant="body2" color="textSecondary">
+                      {m.character}
+                    </Typography>
+                  </>
+                }
               />
               <Link to={`/${context.linkBasePath}/${m.id}`}>
                 <Button variant="outlined" size="medium" color="primary">

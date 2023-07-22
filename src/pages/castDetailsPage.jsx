@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
-import { getCastMember, getMovies } from '../api/tmdb-api'; // Make sure to import getMovies function
+import { getCastMember, getCastMovies } from '../api/tmdb-api'; // Make sure to import getMovies function
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner';
 import TemplateMediaDetailsPage from "../components/templateMediaDetailsPage";
@@ -17,14 +17,14 @@ const CastDetailsPage = () => {
   const { id } = useParams();
 
   const { data: moviesData, error: moviesError, isLoading: isLoadingMovies, isError: isErrorMovies } = useQuery(
-    `cast-filmography-${id}`,
-    () => getMovies(1)
+    [`cast-filmography-${id}`, { id: id }],
+    getCastMovies
   );
   let movies = [];
 
   if (moviesData) {
     console.log("movies data:", moviesData);
-    movies = moviesData ? moviesData.results : [];
+    movies = moviesData ? moviesData.cast.sort((a, b) => new Date(b.release_date) - new Date(a.release_date)) : [];
     console.log("movies:", movies);
   }
    
