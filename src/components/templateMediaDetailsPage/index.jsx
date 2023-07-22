@@ -24,6 +24,7 @@ const TemplateMediaDetailsPage = ({ children }) => {
 
         <Grid item xs={9}>
           {children[2]}
+          {children[3]}
         </Grid>
       </Grid>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
-import { getCastMember } from '../api/tmdb-api'
+import { getCastMember, getMovies } from '../api/tmdb-api'; // Make sure to import getMovies function
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner';
 import TemplateMediaDetailsPage from "../components/templateMediaDetailsPage";
@@ -10,9 +10,24 @@ import MediaHeader from "../components/MediaHeader";
 import CastHeaderInsert from "../components/headerInserts/CastHeaderInsert";
 import CastProfile from "../components/imageLists/castProfile";
 import CastDetails from "../components/castDetails";
+import CastMovieList from "../components/castMovieList";
+
 
 const CastDetailsPage = () => {
   const { id } = useParams();
+
+  const { data: moviesData, error: moviesError, isLoading: isLoadingMovies, isError: isErrorMovies } = useQuery(
+    `cast-filmography-${id}`,
+    () => getMovies(1)
+  );
+  let movies = [];
+
+  if (moviesData) {
+    console.log("movies data:", moviesData);
+    movies = moviesData ? moviesData.results : [];
+    console.log("movies:", movies);
+  }
+   
 
   const { data: cast, error: castError, isLoading: castLoading, isError: isCastError } = useQuery(
     ["cast", { id: id }],
@@ -20,16 +35,15 @@ const CastDetailsPage = () => {
   );
   if (cast) {
     console.log(`cast id: ${id}`);
- 
     console.log(`cast name: ${cast.name}`);
   }
- 
-  if (castLoading) {
+
+  if (castLoading || isLoadingMovies) { // Add isLoadingMovies here
     return <Spinner />;
   }
 
-  if (isCastError) {
-    return <h1>{castError.message}</h1>;
+  if (isCastError || isErrorMovies) { // Add isErrorMovies here
+    return <h1>{castError.message || moviesError.message}</h1>; // Display both errors if either occurs
   }
 
   return (
@@ -41,6 +55,7 @@ const CastDetailsPage = () => {
           </MediaHeader>  
           <CastProfile profilePath={cast.profile_path}/>
           <CastDetails cast={cast} />
+          <CastMovieList movies={movies}/>
         </TemplateMediaDetailsPage>
       )}
       {!cast && (
@@ -51,3 +66,4 @@ const CastDetailsPage = () => {
 };
 
 export default CastDetailsPage;
+

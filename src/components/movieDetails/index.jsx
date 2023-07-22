@@ -35,7 +35,7 @@ const MovieDetails = ( { movie, cast }) => {
       <Fab    
         color="secondary"
         variant="extended"
-        onClick={() =>setDrawerOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
         <NavigationIcon />
