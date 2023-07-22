@@ -12,7 +12,18 @@ const TvSeriesPage = (props) => {
     context.setBasePath("tvshows");
   }
 
-  const { data, error, isLoading, isError } = useQuery("tvseries", getTvSeries);
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (pageNum) => {
+    console.log("handling page change", pageNum)
+    setPage(prevPage => pageNum);
+  }
+
+  const { data, error, isLoading, isError, refetch } = useQuery("tvseries", () => getTvSeries(page));
+
+  useEffect(() => {
+    refetch();
+  }, [page]);
 
   if (isLoading) {
     return <Spinner />;
@@ -32,6 +43,7 @@ const TvSeriesPage = (props) => {
     <CardListPage
       title="Discover TV Series"
       movies={tvShows}
+      pagination={handlePageChange}
       action={(tvShow) => {
         return <AddToFavouritesIcon movie={tvShow} />
       }}
