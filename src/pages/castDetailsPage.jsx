@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
-import { getCastMember, getCastMovies } from '../api/tmdb-api'; // Make sure to import getMovies function
+import { getCastMember, getCastMovies } from '../api/tmdb-api'; 
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner';
 import TemplateMediaDetailsPage from "../components/templateMediaDetailsPage";
@@ -38,12 +38,12 @@ const CastDetailsPage = () => {
     console.log(`cast name: ${cast.name}`);
   }
 
-  if (castLoading || isLoadingMovies) { // Add isLoadingMovies here
+  if (castLoading || isLoadingMovies) { 
     return <Spinner />;
   }
 
-  if (isCastError || isErrorMovies) { // Add isErrorMovies here
-    return <h1>{castError.message || moviesError.message}</h1>; // Display both errors if either occurs
+  if (isCastError || isErrorMovies) { 
+    return <h1>{castError.message || moviesError.message}</h1>; 
   }
 
   return (

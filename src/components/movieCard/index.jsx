@@ -34,6 +34,6 @@ export default function MovieCard({ movie, action }) {      // Destructure props
   }
 
   return (
-    <ProdCard prod={movie} action={action} basePath={"movies"}/>
+    <ProdCard item={movie} action={action} basePath={"movies"}/>
   );
 }

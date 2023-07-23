@@ -1,5 +1,5 @@
 import React from "react";
-import MoviesHeader from "../components/headerMovieList";
+import MoviesHeader from "../components/mediaHeader";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
 

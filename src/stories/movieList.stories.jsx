@@ -1,11 +1,12 @@
 import React from "react";
-import MovieList from "../components/movieList";
+import MovieList from "../components/cardList";
 import SampleMovie from "./sampleData";
 import { MemoryRouter } from "react-router";
 import { action } from "@storybook/addon-actions";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import Grid from "@mui/material/Grid";
 import MoviesContextProvider from "../contexts/moviesContext";
+
 
 export default {
   title: "Home Page/MovieList",
@@ -27,7 +28,7 @@ export const Basic = () => {
   return (
     <Grid container spacing={5}>
       <MovieList
-        movies={movies}
+        items={movies}
         action={(movie) => <AddToFavouritesIcon movie={movie} />}
       />
     </Grid>

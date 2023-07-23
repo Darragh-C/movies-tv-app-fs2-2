@@ -30,7 +30,10 @@ const MovieDetails = ( { movie, cast }) => {
       <GenreTags genres={genreNames} />
       <MovieMetadata movie={movie} />
       <ProductionCompaniesRow companies={movie.production_companies}/>
-      <CastList cast={cast}/>
+      { cast &&
+        <CastList cast={cast}/>
+      }
+      
 
       <Fab    
         color="secondary"
