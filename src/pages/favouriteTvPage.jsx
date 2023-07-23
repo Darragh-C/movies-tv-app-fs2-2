@@ -1,48 +1,41 @@
 import React, { useContext } from "react";
 import CardListPage from "../components/cardListPage";
-import { MoviesContext } from "../contexts/moviesContext";
+import { TvContext } from "../contexts/tvContext";
 import { useQueries } from "react-query";
-import { getMovie } from "../api/tmdb-api";
+import { getShow } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
-import WriteReview from "../components/cardIcons/writeReview";
+
+// import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+// import WriteReview from "../components/cardIcons/writeReview";
 
 
-const FavouriteMoviesPage = (props) => {
-  const { favourites: movieIds } = useContext(MoviesContext);
+const FavouriteTvPage = (props) => {
+  const { tvFavourites: showIds } = useContext(TvContext);
 
   // Create an array of queries and run them in parallel.
-  const favouriteMovieQueries = useQueries(
-    movieIds.map((movieId) => {
+  const favouriteTvQueries = useQueries(
+    showIds.map((showId) => {
       return {
-        queryKey: ["movie", { id: movieId }],
-        queryFn: getMovie,
+        queryKey: ["show", { id: showId }],
+        queryFn: getShow,
       };
     })
   );
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = favouriteTvQueries.find((s) => s.isLoading === true);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const movies = favouriteMovieQueries.map((q) => q.data);
+  const shows = favouriteTvQueries.map((q) => q.data);
 
   return (
     <CardListPage
-      title="Favourite Movies"
-      movies={movies}
-      action={(movie) => {
-        return (
-          <>
-            <RemoveFromFavourites movie={movie} />
-            <WriteReview movie={movie} />
-          </>
-        );
-      }}
+      title="Favourite TV"
+      movies={shows}
     />
   );
 };
 
-export default FavouriteMoviesPage;
+export default FavouriteTvPage;
