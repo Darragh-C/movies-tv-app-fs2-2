@@ -7,6 +7,7 @@ const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState( {} ); 
   const [mustWatch, setMustWatch] = useState([]);
   const [linkBasePath, setLinkBasePath] = useState("");
+  const [tvFavourites, setTvFavourites] = useState([]);
 
   const addToFavourites = (movie) => {
     let updatedFavourites = [...favourites];
@@ -16,11 +17,20 @@ const MoviesContextProvider = (props) => {
     setFavourites(updatedFavourites);
   };
 
+  const addToTvFavourites = (show) => {
+    let updatedTvFavourites = [...tvFavourites];
+    if (!tvFavourites.includes(show.id)) {
+      updatedTvFavourites.push(show.id);
+    }
+    setTvFavourites(updatedTvFavourites);
+  };
+
+  // We will use this function in a later section
   const removeFromFavourites = (movie) => {
     setFavourites(favourites.filter((mId) => mId !== movie.id));
   };
 
-  const addReview = (movie, review) => {   
+  const addReview = (movie, review) => {   // NEW
     setMyReviews( {...myReviews, [movie.id]: review } )
   };
 
@@ -35,7 +45,8 @@ const MoviesContextProvider = (props) => {
 
   const setBasePath = (basePath) => {
     setLinkBasePath(basePath);
-  }
+  };
+  
 
   return (
     <MoviesContext.Provider
@@ -47,6 +58,8 @@ const MoviesContextProvider = (props) => {
         linkBasePath,
         setBasePath,
         addReview,
+        tvFavourites,
+        addToTvFavourites,
       }}
     >
       {props.children}

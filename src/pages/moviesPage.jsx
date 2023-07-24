@@ -8,22 +8,29 @@ import { MoviesContext } from "../contexts/moviesContext";
 
 const MoviesPage = () => {
   const context = useContext(MoviesContext);
-  context.setBasePath("movies");
-  console.log(context.linkBasePath);
+
+  useEffect(() => {
+    if (context.basePath !== "movies") {
+      context.setBasePath("movies");
+      console.log(context.linkBasePath);
+    }
+  }, [context.basePath]);
+
 
   const [page, setPage] = useState(1);
 
   const handlePageChange = (pageNum) => {
     console.log("handling page change", pageNum)
     setPage(prevPage => pageNum);
-  }
+  };
 
   const { data, error, isLoading, isError, refetch } = useQuery("discover", () => getMovies(page));
-  // const { data, error, isLoading, isError } = useQuery("discover", getMovies);
 
   useEffect(() => {
-    refetch();
-  }, [page]);
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   if (isLoading) {
     return <Spinner />;

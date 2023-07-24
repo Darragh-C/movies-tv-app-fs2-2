@@ -1,16 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, setState } from "react";
 import CardListPage from "../components/cardListPage";
 import { getTvSeries } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import { TvContext } from "../contexts/tvContext";
+import { MoviesContext } from "../contexts/moviesContext";
 import AddToTvFavouritesIcon from "../components/cardIcons/addToTvFavourites";
 
 const TvSeriesPage = (props) => {
-  const context = useContext(TvContext);
-  if (context.basePath !== "tvshows") {
-    context.setBasePath("tvshows");
-  }
+  const context = useContext(MoviesContext);
+
+  useEffect(() => {
+    if (context.basePath !== "tvshows") {
+      context.setBasePath("tvshows");
+      console.log(context.linkBasePath);
+    }
+  }, [context.basePath]);
 
   const [page, setPage] = useState(1);
 
