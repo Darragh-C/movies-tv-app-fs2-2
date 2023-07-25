@@ -4,7 +4,7 @@ import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { getShow } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import AddToTvFavouritesIcon from "../components/cardIcons/addToTvFavourites";
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 
 // import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 // import WriteReview from "../components/cardIcons/writeReview";
@@ -36,7 +36,7 @@ const FavouriteTvPage = (props) => {
       title="Favourite TV"
       movies={shows}
       action={(show) => {
-        return <AddToTvFavouritesIcon show={show} />
+        return <RemoveFromFavourites item={show} type={"tv"} />
       }}
     />
   );

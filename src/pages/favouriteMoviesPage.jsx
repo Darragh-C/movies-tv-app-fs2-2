@@ -36,7 +36,7 @@ const FavouriteMoviesPage = (props) => {
       action={(movie) => {
         return (
           <>
-            <RemoveFromFavourites movie={movie} />
+            <RemoveFromFavourites item={movie} type={"movie"} />
             <WriteReview movie={movie} />
           </>
         );

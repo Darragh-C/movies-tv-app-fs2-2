@@ -36,8 +36,12 @@ const MoviesContextProvider = (props) => {
   };
 
   // We will use this function in a later section
-  const removeFromFavourites = (movie) => {
-    setFavourites(favourites.filter((mId) => mId !== movie.id));
+  const removeFromFavourites = (item, type) => {
+    if (type === "movie") {
+      setFavourites(favourites.filter((mId) => mId !== item.id));
+    } else if (type === "tv") {
+      setTvFavourites(tvFavourites.filter((tvId) => tvId !== item.id));
+    }   
   };
 
   const addReview = (movie, review) => {   // NEW
