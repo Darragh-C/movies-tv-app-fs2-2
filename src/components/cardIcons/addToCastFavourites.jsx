@@ -8,7 +8,7 @@ const AddToCastFavouritesIcon = ({ cast }) => {
 
   const onUserSelect = (e) => {
     e.preventDefault();
-    context.addToTvFavourites(cast);
+    context.addToCastFavourites(cast);
   };
   return (
     <IconButton aria-label="add to tv favorites" onClick={onUserSelect}>

@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-const MovieDetails = ( { movie, cast }) => {
+const MovieDetails = ( { movie, cast, action }) => {
   const { id } = useParams();
 
   const genreNames = movie.genres.map((genre) => genre.name);
@@ -31,7 +31,7 @@ const MovieDetails = ( { movie, cast }) => {
       <MovieMetadata movie={movie} />
       <ProductionCompaniesRow companies={movie.production_companies}/>
       { cast &&
-        <CastList cast={cast}/>
+        <CastList cast={cast} onAction={action}/>
       }
       
 

@@ -31,7 +31,7 @@ const styles = {
   }
 };
 
-const CastList = ( { cast } ) => {
+const CastList = ( { cast, onAction } ) => {
   return (
     <>
       <br></br>
@@ -49,6 +49,7 @@ const CastList = ( { cast } ) => {
                 primary={c.name}
                 
               />
+              {onAction(c)}
               <Link to={`/cast/${c.id}`}>
                 <Button variant="outlined" size="medium" color="primary">
                   More Info ...

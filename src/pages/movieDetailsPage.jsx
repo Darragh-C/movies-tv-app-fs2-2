@@ -8,6 +8,7 @@ import TemplateMediaDetailsPage from "../components/templateMediaDetailsPage";
 import MediaImageList from "../components/imageLists/mediaImageList";
 import MediaHeader from "../components/MediaHeader";
 import MediaHeaderInsert from "../components/headerInserts/MediaHeaderInsert";
+import AddToCastFavouritesIcon from "../components/cardIcons/addToCastFavourites";
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
@@ -47,7 +48,13 @@ const MovieDetailsPage = () => {
             <MediaHeaderInsert media={movie} />
           </MediaHeader>  
           <MediaImageList images={posters} />
-          <MovieDetails movie={movie} cast={cast.cast}/>
+          <MovieDetails 
+            movie={movie} 
+            cast={cast.cast}
+            action={(castMember) => {
+              return <AddToCastFavouritesIcon cast={castMember} />
+            }}
+          />
         </TemplateMediaDetailsPage>
       )}
       {!movie || !images && (

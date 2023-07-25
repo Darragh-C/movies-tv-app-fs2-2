@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-export default function CardItem({ item, action }) {      // Destructure props
+export default function CardItem({ item, action }) {      
   const context = useContext(MoviesContext);
   return (
     <Card sx={styles.card}>
