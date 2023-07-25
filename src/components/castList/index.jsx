@@ -49,7 +49,7 @@ const CastList = ( { cast, onAction } ) => {
                 primary={c.name}
                 
               />
-              {onAction(c)}
+              {onAction && onAction(c)}
               <Link to={`/cast/${c.id}`}>
                 <Button variant="outlined" size="medium" color="primary">
                   More Info ...

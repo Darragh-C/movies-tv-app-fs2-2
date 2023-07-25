@@ -28,11 +28,11 @@ const MoviesContextProvider = (props) => {
 
   const addToCastFavourites = (cast) => {
     console.log("cast fave:", cast)
-    // let updatedCastFavourites = [...castFavourites];
-    // if (!castFavourites.includes(cast.id)) {
-    //   updatedCastFavourites.push(cast.id);
-    // }
-    // setCastFavourites(updatedCastFavourites);
+    let updatedCastFavourites = [...castFavourites];
+    if (!castFavourites.includes(cast.id)) {
+      updatedCastFavourites.push(cast.id);
+    }
+    setCastFavourites(updatedCastFavourites);
   };
 
   // We will use this function in a later section
