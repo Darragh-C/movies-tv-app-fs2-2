@@ -41,7 +41,9 @@ const MoviesContextProvider = (props) => {
       setFavourites(favourites.filter((mId) => mId !== item.id));
     } else if (type === "tv") {
       setTvFavourites(tvFavourites.filter((tvId) => tvId !== item.id));
-    }   
+    } else if (type === "cast") {
+      setCastFavourites(castFavourites.filter((castId) => castId !== item.id));
+    }    
   };
 
   const addReview = (movie, review) => {   // NEW

@@ -39,6 +39,13 @@ const FavouriteCastPage = (props) => {
       </MediaHeader>
       <CastList
         cast={cast}
+        onAction={(cast) => {
+          return (
+            <>
+              <RemoveFromFavourites item={cast} type={"cast"} />
+            </>
+          );
+        }}
       />    
     </>
 
