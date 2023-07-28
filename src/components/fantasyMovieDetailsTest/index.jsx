@@ -48,10 +48,10 @@ const FantasyMovieDetailsTest = ({ movie, action }) => {
         <EditIcon/>
       </Fab>
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <SubmitText label={"title"} onAction={action}/>
-        <SubmitText label={"overview"} onAction={action}/>
-        <SubmitText label={"release date"} onAction={action}/>
-        <SubmitText label={"run time"} onAction={action}/>
+        <SubmitText label={"Add title"} onAction={action} buttonText={"Submit"}/>
+        <SubmitText label={"Add overview"} onAction={action} buttonText={"Submit"}/>
+        <SubmitText label={"Add release date"} onAction={action} buttonText={"Submit"}/>
+        <SubmitText label={"Add run time"} onAction={action} buttonText={"Submit"}/>
         <AddGenreTags onAction={action}/>
         <AddProduction onAction={action}/>
         <AddCast onAction={action}/>

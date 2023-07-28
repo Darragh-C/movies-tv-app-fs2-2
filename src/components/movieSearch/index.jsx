@@ -1,8 +1,10 @@
-import React from "react"; 
+import React, { useState } from "react"; 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import TextField from "@mui/material/TextField";
+import SubmitText from "../forms/submitText";
 
 const styles = {
   root: {
@@ -19,14 +21,17 @@ const styles = {
 
 export default function movieSearch(props) {
 
+  const [multiSearchText, setMultiSearchText] = useState("");
+
+  const handleMultiTextChange = (e) => {
+    setMultiSearchText(e.target.value);
+  };
+
   return (
     <>
       <Card sx={styles.root} variant="outlined">
         <CardContent>
-          <Typography variant="h5" component="h1">
-            <FilterAltIcon fontSize="large" />
-            Test
-          </Typography>
+          <SubmitText label="Search movies and cast" buttonText={"Search"} />
         </CardContent>
       </Card>
     </>

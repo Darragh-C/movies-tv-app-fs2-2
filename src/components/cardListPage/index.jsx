@@ -8,6 +8,7 @@ import CardList from "../cardList";
 import CardListHeaderInsert from "../headerInserts/cardListHeaderInsert";
 import CardListPagination from "../cardListPagination";
 import MovieSearch from "../movieSearch";
+import MultiCriteriaSearch from "../forms/multiCriteriaSearch";
 
 const styles = {
   root: {
@@ -27,6 +28,8 @@ const styles = {
     top: 2,
   },
 };
+
+const searchLabels = ["year", "langauge"];
 
 function CardListPage({ movies, title, action, pagination }) {
   const [titleFilter, setTitleFilter] = useState("");
@@ -140,6 +143,7 @@ function CardListPage({ movies, title, action, pagination }) {
         onClose={() => setSearchDrawerOpen(false)}
       >
         <MovieSearch/>
+        <MultiCriteriaSearch labels={searchLabels}/>
       </Drawer>
     </>  
   );

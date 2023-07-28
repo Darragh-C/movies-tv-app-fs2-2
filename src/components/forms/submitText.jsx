@@ -10,6 +10,7 @@ const styles = {
   button: {
     width: 90,
     height: 30,
+    left: 20,
     position: "absolute",
     fontSize: 14,
     fontWeight: "normal",
@@ -23,7 +24,7 @@ const styles = {
   }
 }
 
-function SubmitText({ label, onAction }) {
+function SubmitText({ label, buttonText, onAction }) {
   const [formData, setFormData] = useState({
     type: "",
     value: "",
@@ -51,28 +52,20 @@ function SubmitText({ label, onAction }) {
   return (
     <form onSubmit={handleSubmit}>
       <br/>
-      <Grid key={label + "-grid"} container spacing={2}>
-        <Grid key={label + "-griditem1"} item xs={0.25}></Grid>
-        <Grid key={label + "-griditem2"} item xs={6}>
-          <label key={label + "-label"} sx={styles.label}>
-            <p key={label + "-text"} style={styles.text}>Add {label}:</p>
-            <input
-              key={label + "-input"}
-              sx={styles.label}
-              type="text"
-              name={label}
-              value={formData.value}
-              onChange={handleInputChange}
-            />
-          </label>
-        </Grid>
-        <Grid key={label + "griditem3"} item xs={2}>
-          <button key={label + "-button"} sx={styles.button} type="submit">
-            Submit
-          </button>
-        </Grid>
-        <Grid key={label + "griditem4"} item xs={2}></Grid>
-      </Grid>
+      <label key={label + "-label"} sx={styles.label}>
+        <p key={label + "-text"} style={styles.text}>{label}:</p>
+        <input
+          key={label + "-input"}
+          sx={styles.label}
+          type="text"
+          name={label}
+          value={formData.value}
+          onChange={handleInputChange}
+        />
+      </label>
+      <button key={label + "-button"} sx={styles.button} type="submit">
+        {buttonText}
+      </button>
     </form>
   );
 }
