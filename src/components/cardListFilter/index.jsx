@@ -48,7 +48,7 @@ export default function CardListFilter(props) {
 
   const handleUserImput = (e, type, value) => {
     e.preventDefault();
-    props.onUserInput(type, value); // NEW
+    props.onUserInput(type, value); 
   };
 
   const handleTextChange = (e, props) => {
@@ -73,7 +73,7 @@ export default function CardListFilter(props) {
       <CardContent>
         <Typography variant="h5" component="h1">
           <FilterAltIcon fontSize="large" />
-          Filter movies
+          Search movies
         </Typography>
         <TextField
           sx={styles.formControl}
@@ -84,6 +84,10 @@ export default function CardListFilter(props) {
           variant="filled"
           onChange={handleTextChange}
         />
+        <Typography variant="h5" component="h1">
+          <FilterAltIcon fontSize="large" />
+          Filter movies
+        </Typography>
         <FormControl sx={styles.formControl}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select

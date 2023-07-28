@@ -13,8 +13,12 @@ import ProductionCompaniesRow from "../cardRows/productionCompaniesRow";
 const styles = {
   fab: { 
     position: "fixed",
-    top: 50,
+    top: 70,
     right: 2,
+  },
+  drawer: {
+    anchor: "top",
+    height: "50%",
   },
 };
 
@@ -44,7 +48,7 @@ const MovieDetails = ( { movie, cast, action }) => {
         <NavigationIcon />
         Reviews
       </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer sx={styles.drawer} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
     </>

@@ -7,23 +7,32 @@ import Drawer from "@mui/material/Drawer";
 import CardList from "../cardList";
 import CardListHeaderInsert from "../headerInserts/cardListHeaderInsert";
 import CardListPagination from "../cardListPagination";
+import MovieSearch from "../movieSearch";
 
 const styles = {
   root: {
     padding: "20px",
   },
   fab: {
+    width: 90, 
+    height: 40, 
     marginTop: 8,
     position: "fixed",
-    top: 2,
     right: 2,
+  },
+  searchFab: {
+    top: 52,
+  },
+  filterFab: {
+    top: 2,
   },
 };
 
 function CardListPage({ movies, title, action, pagination }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+  const [searchDrawerOpen, setSearchDrawerOpen] = useState(false);
   const [sortOption, setSortOption] = useState("Popular");
   const [ratingFilter, setRatingFilter] = useState("1");
 
@@ -93,17 +102,19 @@ function CardListPage({ movies, title, action, pagination }) {
       </Grid>
       <CardListPagination onPagination={pagination}/>
       <Fab
+        id="filter-fab"
         color="secondary"
         variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
+        onClick={() => setFilterDrawerOpen(true)}
+        sx={{...styles.fab, ...styles.filterFab}}
       >
         Filter
       </Fab>
       <Drawer
+        id="filter-drawer"
         anchor="left"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        open={filterDrawerOpen}
+        onClose={() => setFilterDrawerOpen(false)}
       >
         <CardListFilter
           onUserInput={handleChange}
@@ -112,6 +123,23 @@ function CardListPage({ movies, title, action, pagination }) {
           sortOption={sortOption}
           ratingFilter={ratingFilter}
         />
+      </Drawer>
+      <Fab
+        id="search-fab"
+        color="secondary"
+        variant="extended"
+        onClick={() => setSearchDrawerOpen(true)}
+        sx={{...styles.fab, ...styles.searchFab}}
+      >
+        Search
+      </Fab>
+      <Drawer
+        id="search-drawer"
+        anchor="left"
+        open={searchDrawerOpen}
+        onClose={() => setSearchDrawerOpen(false)}
+      >
+        <MovieSearch/>
       </Drawer>
     </>  
   );

@@ -29,11 +29,12 @@ const SiteHeader = () => {
 
   const menuOptions = [
     { label: "Movies", path: "/" },
+    { label: "Upcoming movies", path: "/movies/upcoming" },
+    { label: "Search movies", path: "/movies/search" },
+    { label: "TV", path: "/tvshows" },
     { label: "Favorite movies", path: "/movies/favourites" },
     { label: "Favorite TV", path: "/tvshows/favourites" },
     { label: "Favorite Cast", path: "/cast/favourites" },
-    { label: "Upcoming movies", path: "/movies/upcoming" },
-    { label: "TV", path: "/tvshows" },
     { label: "Fantasy movie", path: "/fantasymovie" },
   ];
 

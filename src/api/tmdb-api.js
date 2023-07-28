@@ -29,6 +29,21 @@ export const getMovie = (args) => {
  });
 };
 
+export const getMoviesByQuery = (queryString) => {
+  
+  return fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}${queryString}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+    throw error
+ });
+};
+
 export const getCastMovies = (args) => {
   // console.log(args)
   const [, idPart] = args.queryKey;
