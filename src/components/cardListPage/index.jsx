@@ -31,7 +31,7 @@ const styles = {
 
 const searchLabels = ["year", "langauge"];
 
-function CardListPage({ movies, title, action, pagination }) {
+function CardListPage({ movies, title, action, pagination, search }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
@@ -143,7 +143,7 @@ function CardListPage({ movies, title, action, pagination }) {
         onClose={() => setSearchDrawerOpen(false)}
       >
         <MovieSearch/>
-        <MultiCriteriaSearch labels={searchLabels}/>
+        <MultiCriteriaSearch labels={searchLabels} onAction={search}/>
       </Drawer>
     </>  
   );

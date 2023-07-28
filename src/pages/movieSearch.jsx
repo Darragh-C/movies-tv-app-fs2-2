@@ -5,7 +5,8 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import { MoviesContext } from "../contexts/moviesContext";
-
+import MovieQueryParams from "../dataStore/movie-query-params.json"
+ 
 const MovieSearch = () => {
   const context = useContext(MoviesContext);
 
@@ -22,6 +23,15 @@ const MovieSearch = () => {
   const handlePageChange = (pageNum) => {
     console.log("handling page change", pageNum)
     setPage(prevPage => pageNum);
+  };
+
+  const handleSearchQuery = (rawQueryParams) => {
+    let queryParamString = "";
+    rawQueryParams.forEach(function(rawQueryParam) {
+      const paramString =  MovieQueryParams[rawQueryParam.label] + rawQueryParam.value;
+      queryParamString += paramString;
+    });
+    console.log("queryParamString:", queryParamString);
   };
 
   const { data, error, isLoading, isError, refetch } = useQuery("discover", () => getMovies(page));
@@ -54,6 +64,7 @@ const MovieSearch = () => {
       action={(movie) => {
         return <AddToFavouritesIcon movie={movie} />
       }}
+      search={handleSearchQuery}
     />
   );
 };

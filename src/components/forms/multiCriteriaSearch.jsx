@@ -31,13 +31,14 @@ const initialFormData = [
   },
 ];
 
-const multiCriteriaSearch = ({labels}) => {
+const multiCriteriaSearch = ({labels, onAction}) => {
   const [formData, setFormData] = useState(initialFormData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add your form submission logic here
-    console.log(formData);
+    console.log("formData", formData);
+    onAction(formData);
   };
 
   const handleInputChange = (event, index) => {
