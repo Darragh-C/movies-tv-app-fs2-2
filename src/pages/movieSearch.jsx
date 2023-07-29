@@ -27,8 +27,13 @@ const MovieSearch = () => {
 
   const handleSearchQuery = (rawQueryParams) => {
     let queryParamString = "";
-    rawQueryParams.forEach(function(rawQueryParam) {
-      const paramString =  MovieQueryParams[rawQueryParam.label] + rawQueryParam.value;
+    console.log("MovieQueryParamsLang", MovieQueryParams["language"]);
+    rawQueryParams.forEach(function(rawQueryParam, index) {
+      if(index != 0) {
+        queryParamString+="&"
+      }
+      const paramString =  MovieQueryParams[rawQueryParam.label.toString()] + rawQueryParam.value;
+      console.log("paramString", paramString);
       queryParamString += paramString;
     });
     console.log("queryParamString:", queryParamString);

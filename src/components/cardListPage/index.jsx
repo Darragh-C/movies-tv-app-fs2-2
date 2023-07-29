@@ -29,7 +29,7 @@ const styles = {
   },
 };
 
-const searchLabels = ["year", "langauge"];
+const searchLabels = ["year", "language", "vote", "genres"];
 
 function CardListPage({ movies, title, action, pagination, search }) {
   const [titleFilter, setTitleFilter] = useState("");
