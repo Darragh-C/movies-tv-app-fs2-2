@@ -125,20 +125,12 @@ function CardListPage({ movies, title, action, pagination, searchQuery }) {
     setQueryObject((prevObject) => [...prevObject, newObject]);
   };
 
-  console.log("searchQuery type:", typeof searchQuery);
-
   const submitQuery = (e) => {
     e.preventDefault();
     console.log("queryObject:", queryObject);
     searchQuery(queryObject);
-
+    setQueryObject([]);
   };
-
-  const printHello = (e) => {
-    e.preventDefault();
-    console.log("printHello");
-    searchQuery('SQhello');
-  }
 
   return (
    <>

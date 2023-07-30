@@ -50,9 +50,9 @@ const MovieSearch = () => {
     fetchGenres(); 
   }, []);
 
-  useEffect(() => {
-    setSearchTrigger(true);
-  }, [searchString]);
+  // useEffect(() => {
+  //   setSearchTrigger(true);
+  // }, [searchString]);
 
   useEffect(() => {
     const searchMovies = async () => {
@@ -60,6 +60,7 @@ const MovieSearch = () => {
         const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}${searchString}`);
         const jsonData = await response.json();
         setMovies(jsonData.results);
+        // setSearchString("");
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -67,6 +68,7 @@ const MovieSearch = () => {
     if (searchTrigger) {
       searchMovies();
       setSearchTrigger(false); 
+      setSearchString("");
     }
   }, [searchTrigger]); 
 
@@ -109,6 +111,7 @@ const MovieSearch = () => {
       fullQueryString += queryString;
     })
     setSearchString(fullQueryString);
+    setSearchTrigger(true);
   };
 
   // Redundant, but necessary to avoid app crashing.

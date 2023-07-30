@@ -1,6 +1,6 @@
 {
   "year": "&primary_release_year=",
   "genres": "&with_genres=",
-  "vote": "&vote_average=",
+  "vote": "&vote_average.gte=",
   "language": "&with_original_language="
 }
