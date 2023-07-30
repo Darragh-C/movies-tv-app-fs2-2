@@ -1,13 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
 import CardListPage from "../components/cardListPage";
-import { getMovies } from "../api/tmdb-api";
+import { getMovies, getGenres, getMoviesByQuery } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import { MoviesContext } from "../contexts/moviesContext";
 import MovieQueryParams from "../dataStore/movie-query-params.json"
- 
+import langCodes from "../dataStore/iso-codes.json"
+
 const MovieSearch = () => {
+
+  const [page, setPage] = useState(1);
+  const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [searchString, setSearchString] = useState("");
+  const [searchTrigger, setSearchTrigger] = useState(false);
   const context = useContext(MoviesContext);
 
   useEffect(() => {
@@ -17,44 +24,92 @@ const MovieSearch = () => {
     }
   }, [context.basePath]);
 
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const moviesData = await getMovies(page);
+        console.log(moviesData.results);
+        setMovies(moviesData.results)
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+    fetchMovies(); 
+  }, [page]);
 
-  const [page, setPage] = useState(1);
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const genresData = await getGenres();
+        console.log(genresData);
+        setGenres(genresData.genres)
+      } catch (error) {
+        console.error('Error fetching genres:', error);
+      }
+    };
+    fetchGenres(); 
+  }, []);
+
+  useEffect(() => {
+    setSearchTrigger(true);
+  }, [searchString]);
+
+  useEffect(() => {
+    const searchMovies = async () => {
+      try {
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}${searchString}`);
+        const jsonData = await response.json();
+        setMovies(jsonData.results);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    if (searchTrigger) {
+      searchMovies();
+      setSearchTrigger(false); 
+    }
+  }, [searchTrigger]); 
 
   const handlePageChange = (pageNum) => {
-    console.log("handling page change", pageNum)
+    console.log("handling page change", pageNum);
     setPage(prevPage => pageNum);
   };
 
-  const handleSearchQuery = (rawQueryParams) => {
-    let queryParamString = "";
-    console.log("MovieQueryParamsLang", MovieQueryParams["language"]);
-    rawQueryParams.forEach(function(rawQueryParam, index) {
-      if(index != 0) {
-        queryParamString+="&"
+  const getLangId = (langName) => {
+    const lang = langCodes.find(lang => lang.name === langName);
+    return lang.id;
+  }
+
+  const getGenreId = (genreName, genres) => {
+    const genre = genres.find(genre => genre.name === genreName);
+    return genre.id;
+  }
+
+  const handleQueryObjects = (rawQueryObjs) => {
+    let fullQueryString = "";
+    rawQueryObjs.forEach(function(queryObj) {
+      let queryString = "";
+      queryString += MovieQueryParams[queryObj.label];
+      switch (queryObj.label) {
+        case 'year':
+          queryString += queryObj.value;
+          break;
+        case 'genres':
+          const genreId = getGenreId(queryObj.value, genres);
+          queryString += genreId;
+          break;
+        case 'vote':
+          queryString += queryObj.value;
+          break;
+        case 'language':
+          const langCode = getLangId(queryObj.value);
+          queryString += langCode;
+          break;
       }
-      const paramString =  MovieQueryParams[rawQueryParam.label.toString()] + rawQueryParam.value;
-      console.log("paramString", paramString);
-      queryParamString += paramString;
-    });
-    console.log("queryParamString:", queryParamString);
+      fullQueryString += queryString;
+    })
+    setSearchString(fullQueryString);
   };
-
-  const { data, error, isLoading, isError, refetch } = useQuery("discover", () => getMovies(page));
-
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-    }
-  }, [error]);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-
-  const movies = data ? data.results : [];
 
   // Redundant, but necessary to avoid app crashing.
   // const favourites = movies.filter((m) => m.favorite);
@@ -63,13 +118,13 @@ const MovieSearch = () => {
 
   return (
     <CardListPage
-      title="Search Movies"
       movies={movies}
-      pagination={handlePageChange}
+      title="Search Movies"
       action={(movie) => {
         return <AddToFavouritesIcon movie={movie} />
       }}
-      search={handleSearchQuery}
+      pagination={handlePageChange}
+      searchQuery={handleQueryObjects} 
     />
   );
 };

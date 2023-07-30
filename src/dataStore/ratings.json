@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Awful"
+  },
+  {
+    "id": 2,
+    "name": "Very Bad"
+  },
+  {
+    "id": 3,
+    "name": "Bad"
+  },
+  {
+    "id": 4,
+    "name": "Below Average"
+  },
+  {
+    "id": 5,
+    "name": "Average"
+  },
+  {
+    "id": 6,
+    "name": "Above Average"
+  },
+  {
+    "id": 7,
+    "name": "Good"
+  },
+  {
+    "id": 8,
+    "name": "Very Good"
+  },
+  {
+    "id": 9,
+    "name": "Excellent"
+  },
+  {
+    "id": 10,
+    "name": "Outstanding"
+  }
+]

@@ -8,7 +8,7 @@ import SubmitText from "../forms/submitText";
 
 const styles = {
   root: {
-    maxWidth: 345,
+    top: 20,
   },
   media: { height: 300 },
 

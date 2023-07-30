@@ -9,6 +9,13 @@ import CardListHeaderInsert from "../headerInserts/cardListHeaderInsert";
 import CardListPagination from "../cardListPagination";
 import MovieSearch from "../movieSearch";
 import MultiCriteriaSearch from "../forms/multiCriteriaSearch";
+import OptionsDrowdown from "../forms/optionsDropdown";
+import Languages from "../../dataStore/iso-codes.json";
+import Ratings from "../../dataStore/ratings.json";
+import { getGenres } from "../../api/tmdb-api";
+import { useQuery } from 'react-query';
+import Spinner from '../spinner';
+import { Button } from "@mui/base";
 
 const styles = {
   root: {
@@ -27,22 +34,44 @@ const styles = {
   filterFab: {
     top: 2,
   },
+  p: {
+    fontFamily: "sans-serif",
+    textAlign: "center",
+  }
 };
 
-const searchLabels = ["year", "language", "vote", "genres"];
 
-function CardListPage({ movies, title, action, pagination, search }) {
+function CardListPage({ movies, title, action, pagination, searchQuery }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
   const [searchDrawerOpen, setSearchDrawerOpen] = useState(false);
   const [sortOption, setSortOption] = useState("Popular");
   const [ratingFilter, setRatingFilter] = useState("1");
+  const [queryObject, setQueryObject] = useState([]);
 
-  console.log(`genreFilter: ${genreFilter}`);
-  console.log(`sortOption: ${sortOption}`);
+  const ratings = [1,2,3,4,5,6,7,8,9,10];
+
+  let genres;
+
+  const { data, error, isLoading, isError } = useQuery("genres", getGenres);
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+  if (data) {
+    genres = data.genres;
+  }
 
   const genreId = Number(genreFilter);
+
+  const currentYear = new Date().getFullYear();
+  const yearArray = [];
+  for (let i = 1888; i <= currentYear; i++) {
+    yearArray.push(i);
+  }
 
   let displayedMovies = movies
   .filter((m) => {
@@ -87,6 +116,29 @@ function CardListPage({ movies, title, action, pagination, search }) {
       setRatingFilter(value);
     }
   };
+
+  const pushQueryObject = (label, value) => {
+    const newObject = {
+      label: label,
+      value: value,
+    };
+    setQueryObject((prevObject) => [...prevObject, newObject]);
+  };
+
+  console.log("searchQuery type:", typeof searchQuery);
+
+  const submitQuery = (e) => {
+    e.preventDefault();
+    console.log("queryObject:", queryObject);
+    searchQuery(queryObject);
+
+  };
+
+  const printHello = (e) => {
+    e.preventDefault();
+    console.log("printHello");
+    searchQuery('SQhello');
+  }
 
   return (
    <>
@@ -143,7 +195,16 @@ function CardListPage({ movies, title, action, pagination, search }) {
         onClose={() => setSearchDrawerOpen(false)}
       >
         <MovieSearch/>
-        <MultiCriteriaSearch labels={searchLabels} onAction={search}/>
+ 
+        <div>
+          <OptionsDrowdown onAction={(value) => pushQueryObject("From year", value)} label={"From year"} items={yearArray.sort((a, b) => b - a)} />
+          <OptionsDrowdown onAction={(value) => pushQueryObject("To year", value)} label={"To year"} items={yearArray.sort((a, b) => b - a)} />
+        </div>
+        <OptionsDrowdown onAction={(value) => pushQueryObject("year", value)} label={"Specific year"} items={yearArray.sort((a, b) => b - a)} />
+        <OptionsDrowdown onAction={(value) => pushQueryObject("language", value)} label={"Language"} items={Languages.map((langObj) => langObj.name).sort((a, b) => a.localeCompare(b))} initialState={"English"} />
+        <OptionsDrowdown onAction={(value) => pushQueryObject("vote", value)} label={"Rating"} items={ratings} />
+        <OptionsDrowdown onAction={(value) => pushQueryObject("genres", value)} label={"Genre"} items={genres.map((genreObj) => genreObj.name).sort((a, b) => a.localeCompare(b))} />
+        <Button variant="outlined" onClick={submitQuery}>Search</Button>
       </Drawer>
     </>  
   );

@@ -46,25 +46,25 @@ export default function CardListFilter(props) {
     genres.unshift({ id: "0", name: "All" });
   }
 
-  const handleUserImput = (e, type, value) => {
+  const handleUserInput = (e, type, value) => {
     e.preventDefault();
     props.onUserInput(type, value); 
   };
 
   const handleTextChange = (e, props) => {
-    handleUserImput(e, "title", e.target.value);
+    handleUserInput(e, "title", e.target.value);
   };
 
   const handleGenreChange = (e) => {
-    handleUserImput(e, "genre", e.target.value);
+    handleUserInput(e, "genre", e.target.value);
   };
 
   const handleSortOption = (e) => {
-    handleUserImput(e, "sort", e.target.value);
+    handleUserInput(e, "sort", e.target.value);
   };
 
   const handleRatingChange = (e) => {
-    handleUserImput(e, "rating", e.target.value);
+    handleUserInput(e, "rating", e.target.value);
   };
 
   return (
