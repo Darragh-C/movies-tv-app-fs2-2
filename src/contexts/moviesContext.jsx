@@ -9,6 +9,11 @@ const MoviesContextProvider = (props) => {
   const [linkBasePath, setLinkBasePath] = useState("");
   const [tvFavourites, setTvFavourites] = useState([]);
   const [castFavourites, setCastFavourites] = useState([]);
+  const [currentFetchContext, setCurrentFetchContext] = useState("Discover");
+
+  const updateFetchContext = (fetchContext) => {
+    setCurrentFetchContext(fetchContext);
+  }
 
   const addToFavourites = (movie) => {
     let updatedFavourites = [...favourites];
@@ -78,6 +83,8 @@ const MoviesContextProvider = (props) => {
         addToTvFavourites,
         castFavourites, 
         addToCastFavourites,
+        currentFetchContext,
+        updateFetchContext
       }}
     >
       {props.children}

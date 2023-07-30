@@ -10,7 +10,8 @@ import langCodes from "../dataStore/iso-codes.json"
 
 const MovieSearch = () => {
 
-  const [page, setPage] = useState(1);
+  const [discoverPage, setDiscoverPage] = useState(1);
+  const [searchPage, setSearchPage] = useState(1);
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [searchString, setSearchString] = useState("");
@@ -25,9 +26,11 @@ const MovieSearch = () => {
   }, [context.basePath]);
 
   useEffect(() => {
+    
     const fetchMovies = async () => {
       try {
-        const moviesData = await getMovies(page);
+        context.updateFetchContext("Discover");
+        const moviesData = await getMovies(discoverPage);
         console.log(moviesData.results);
         setMovies(moviesData.results)
       } catch (error) {
@@ -35,7 +38,8 @@ const MovieSearch = () => {
       }
     };
     fetchMovies(); 
-  }, [page]);
+    
+  }, [discoverPage]);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -57,7 +61,8 @@ const MovieSearch = () => {
   useEffect(() => {
     const searchMovies = async () => {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}${searchString}`);
+        context.updateFetchContext("Search");
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}${searchString}&page=${searchPage}`);
         const jsonData = await response.json();
         setMovies(jsonData.results);
         // setSearchString("");
@@ -65,16 +70,26 @@ const MovieSearch = () => {
         console.error('Error fetching data:', error);
       }
     };
-    if (searchTrigger) {
+    // if (searchTrigger) {
+      
       searchMovies();
       setSearchTrigger(false); 
       setSearchString("");
-    }
-  }, [searchTrigger]); 
+      
+    // }
+  }, [searchTrigger, searchPage]); 
 
   const handlePageChange = (pageNum) => {
     console.log("handling page change", pageNum);
-    setPage(prevPage => pageNum);
+    console.log("context.currentFetchContext", context.currentFetchContext);
+    switch (context.currentFetchContext) {
+      case 'Discover':
+        setDiscoverPage(prevPage => pageNum);
+        break;
+      case 'Search':
+        setSearchPage(prevPage => pageNum);
+        break;
+    }
   };
 
   const getLangId = (langName) => {
