@@ -186,8 +186,6 @@ function CardListPage({ movies, title, action, pagination, searchQuery }) {
         open={searchDrawerOpen}
         onClose={() => setSearchDrawerOpen(false)}
       >
-        <MovieSearch/>
- 
         <div>
           <OptionsDrowdown onAction={(value) => pushQueryObject("From year", value)} label={"From year"} items={yearArray.sort((a, b) => b - a)} />
           <OptionsDrowdown onAction={(value) => pushQueryObject("To year", value)} label={"To year"} items={yearArray.sort((a, b) => b - a)} />
