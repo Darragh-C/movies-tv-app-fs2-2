@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
+import { Button } from '@mui/material';
 
 const styles = {
   form: {
-    border: "solid"
+    border: "1px solid #ccc",
+    borderRadius: "18px",
+    boxShadow: "0 5px 10px rgba(0, 0, 0, 0.1)", 
+    padding: "20px",
+    width: "50%", 
+    margin: "0 auto", 
   },
   label: {
     position: "fixed",
     padding: 10,
   },
   button: {
-    width: 90,
-    height: 30,
-    left: 20,
-    position: "absolute",
-    fontSize: 14,
-    fontWeight: "normal",
-    textAlign: "center",
-    /*margin: auto;*/
-    paddingTop: 10,
-    marginTop:-20,
+    left: 40,
   },
   text: {
-    fontFamily: "sans-serif"
+    fontFamily: "sans-serif",
+    fontSize: "18pt"
   }
 }
 
-function LoginForm() {
+function authForm({ title, buttonText }) {
   return (
-    <div sx={styles.form}>
-      <form >
-          <br/>
+      <form style={styles.form}>
+          <p key={"-text"} style={styles.text}>{title}</p>
           <label key={"email-label"} sx={styles.label}>
-            <p key={"-text"} style={styles.text}>{"Log in"}:</p>
             <input
               key={"email-input"}
               sx={styles.label}
@@ -40,7 +36,6 @@ function LoginForm() {
             />
           </label>
           <label key={"password-label"} sx={styles.label}>
-            <p key={"password-text"} style={styles.text}>{"Password"}:</p>
             <input
               key={"password-input"}
               sx={styles.label}
@@ -48,13 +43,11 @@ function LoginForm() {
               value={"Password"}
             />
           </label>
-          <button key={"-button"} sx={styles.button} type="submit">
-            {"Log in"}
-          </button>
+          <Button variant="contained" type="submit" sx={styles.button}>
+            {buttonText}
+          </Button>
         </form>
-    </div>
-    
   );
 }
 
-export default LoginForm;
+export default authForm;
