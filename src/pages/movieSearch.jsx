@@ -16,6 +16,7 @@ const MovieSearch = () => {
   const [genres, setGenres] = useState([]);
   const [searchString, setSearchString] = useState("");
   const [searchTrigger, setSearchTrigger] = useState(false);
+  const [discoverOn, setDiscoverOn] = useState(true);
   const context = useContext(MoviesContext);
 
   useEffect(() => {
@@ -29,6 +30,8 @@ const MovieSearch = () => {
     
     const fetchMovies = async () => {
       try {
+        console.log("discoverPageHook", discoverPage);
+        console.log("discoverOn:", discoverOn);
         context.updateFetchContext("Discover");
         const moviesData = await getMovies(discoverPage);
         console.log(moviesData.results);
@@ -37,8 +40,9 @@ const MovieSearch = () => {
         console.error('Error fetching movies:', error);
       }
     };
-    fetchMovies(); 
-    
+    if (discoverOn) {
+      fetchMovies(); 
+    }
   }, [discoverPage]);
 
   useEffect(() => {
@@ -61,6 +65,7 @@ const MovieSearch = () => {
   useEffect(() => {
     const searchMovies = async () => {
       try {
+        console.log("searchPageHook", searchPage);
         context.updateFetchContext("Search");
         const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}${searchString}&page=${searchPage}`);
         const jsonData = await response.json();
@@ -70,13 +75,13 @@ const MovieSearch = () => {
         console.error('Error fetching data:', error);
       }
     };
-    // if (searchTrigger) {
+    if (searchTrigger) {
       
       searchMovies();
       setSearchTrigger(false); 
-      setSearchString("");
+      //setSearchString("");
       
-    // }
+     }
   }, [searchTrigger, searchPage]); 
 
   const handlePageChange = (pageNum) => {
@@ -85,9 +90,13 @@ const MovieSearch = () => {
     switch (context.currentFetchContext) {
       case 'Discover':
         setDiscoverPage(prevPage => pageNum);
+        console.log("discoverPage", discoverPage);
         break;
       case 'Search':
         setSearchPage(prevPage => pageNum);
+        console.log("searchPage", searchPage);
+        setDiscoverOn(false);
+        setSearchTrigger(true);
         break;
     }
   };
