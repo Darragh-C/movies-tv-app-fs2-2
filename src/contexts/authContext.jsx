@@ -1,12 +1,12 @@
-import React, useState, useEffect, createContext from "react";
+import React, { useState, useEffect, createContext } from "react";
 
 export const AuthContext = createContext(null);
 
-const AuthContextProvider = ({ children }) => {
+const AuthContextProvider = ({ props }) => {
   const [user, setUser] = useState({ username: null, password: null });
 
   const authenticate = (username, password) => {
-    // Validation user credentials somehow
+    // Validate user credentials here
     setUser({ username, password });
   };
 
@@ -24,7 +24,7 @@ const AuthContextProvider = ({ children }) => {
         signout,
       }}
     >
-      {children}
+      {props.children}
     </AuthContext.Provider>
   );
 };
