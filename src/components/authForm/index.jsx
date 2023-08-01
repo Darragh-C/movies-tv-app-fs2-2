@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import { Button } from '@mui/material';
 
 const styles = {
+  formContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh", 
+  },
   form: {
     border: "1px solid #ccc",
     borderRadius: "18px",
     boxShadow: "0 5px 10px rgba(0, 0, 0, 0.1)", 
     padding: "10px",
-    width: "25%", 
     minWidth: "250px",
-    margin: "0 auto", 
   },
   formContent: {
     display: "flex",
@@ -19,7 +23,11 @@ const styles = {
   },
   input: {
     width: "100%",
-    minWidth: "150px",
+    color: "gray",
+  },
+  label: {
+    padding: 10,
+    margin: "0 auto", 
   },
   button: {
     marginTop: "20px",
@@ -32,32 +40,34 @@ const styles = {
 
 function authForm({ title, buttonText }) {
   return (
-    <form style={styles.form}>
-      <div style={styles.formContent}>
-        <p key={"-text"} style={styles.text}>{title}</p>
-        <div class="field" style={styles.input}>
-          <input
-            key={"email-input"}
-            style={styles.input}
-            type="text"
-            value={"Email address"}
-          />
+    <div style={styles.formContainer}>
+      <form style={styles.form}>
+        <div style={styles.formContent}>
+          <p key={"-text"} style={styles.text}>{title}</p>
+          <div class="field" style={styles.input}>
+            <input
+              key={"email-input"}
+              style={styles.input}
+              type="text"
+              value={"Email address"}
+            />
+          </div>
+          <div class="field" style={styles.input}>
+            <input
+              key={"password-input"}
+              style={styles.input}
+              type="text"
+              value={"Password"}
+            />
+          </div>
+          <div class="field" style={styles.button}>
+            <Button variant="contained" type="submit" sx={styles.button}>
+              {buttonText}
+            </Button>
+          </div>
         </div>
-        <div class="field" style={styles.input}>
-          <input
-            key={"password-input"}
-            style={styles.input}
-            type="text"
-            value={"Password"}
-          />
-        </div>
-        <div class="field" style={styles.button}>
-          <Button variant="contained" type="submit" sx={styles.button}>
-            {buttonText}
-          </Button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 

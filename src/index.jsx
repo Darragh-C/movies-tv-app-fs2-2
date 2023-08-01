@@ -20,6 +20,7 @@ import FantasyMoviePage from "./pages/fantasyMoviePage";
 import FavouriteTvPage from "./pages/favouriteTvPage";
 import FavouriteCastPage from "./pages/favouriteCastPage";
 import MovieSearch from "./pages/movieSearch";
+import LogInPage from "./pages/logInPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,7 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
+            <Route path="/login" element={<LogInPage />} />
             <Route path="/fantasymovie" element={<FantasyMoviePage />} />
             <Route path="/cast/:id" element={<CastDetailsPage />} />
             <Route path="/tvshows/:seriesId/season/:seasonNum" element={<SeasonDetailsPage />} />
