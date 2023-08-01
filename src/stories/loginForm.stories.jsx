@@ -12,6 +12,6 @@ export default {
   ],
 };
 
-export const Basic = () => <LoginForm title="Log in" buttonText={"Log in"} />;
+export const Basic = () => <LoginForm title="Login" buttonText={"LOG IN"} />;
 
 Basic.storyName = "Default";

@@ -6,16 +6,23 @@ const styles = {
     border: "1px solid #ccc",
     borderRadius: "18px",
     boxShadow: "0 5px 10px rgba(0, 0, 0, 0.1)", 
-    padding: "20px",
-    width: "50%", 
+    padding: "10px",
+    width: "25%", 
+    minWidth: "250px",
     margin: "0 auto", 
   },
-  label: {
-    position: "fixed",
-    padding: 10,
+  formContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "40px",
+  },
+  input: {
+    width: "100%",
+    minWidth: "150px",
   },
   button: {
-    left: 40,
+    marginTop: "20px",
   },
   text: {
     fontFamily: "sans-serif",
@@ -25,28 +32,32 @@ const styles = {
 
 function authForm({ title, buttonText }) {
   return (
-      <form style={styles.form}>
-          <p key={"-text"} style={styles.text}>{title}</p>
-          <label key={"email-label"} sx={styles.label}>
-            <input
-              key={"email-input"}
-              sx={styles.label}
-              type="text"
-              value={"Email address"}
-            />
-          </label>
-          <label key={"password-label"} sx={styles.label}>
-            <input
-              key={"password-input"}
-              sx={styles.label}
-              type="text"
-              value={"Password"}
-            />
-          </label>
+    <form style={styles.form}>
+      <div style={styles.formContent}>
+        <p key={"-text"} style={styles.text}>{title}</p>
+        <div class="field" style={styles.input}>
+          <input
+            key={"email-input"}
+            style={styles.input}
+            type="text"
+            value={"Email address"}
+          />
+        </div>
+        <div class="field" style={styles.input}>
+          <input
+            key={"password-input"}
+            style={styles.input}
+            type="text"
+            value={"Password"}
+          />
+        </div>
+        <div class="field" style={styles.button}>
           <Button variant="contained" type="submit" sx={styles.button}>
             {buttonText}
           </Button>
-        </form>
+        </div>
+      </div>
+    </form>
   );
 }
 
