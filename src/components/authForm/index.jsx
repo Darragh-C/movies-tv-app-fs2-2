@@ -39,16 +39,19 @@ const styles = {
   }
 }
 
-const [ email, setEmail ] = useState("");
-const [ password, setPassword ] = useState("");
-const { authenticate } = useContext(AuthContextProvider);
 
-const handleLogin = (e) => {
-  e.preventDefault();
-  authenticate(username, password);
-};
 
 function authForm({ title, buttonText }) {
+
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const { authenticate } = useContext(AuthContextProvider);
+  
+  const handleLogin = (e) => {
+    e.preventDefault();
+    authenticate(username, password);
+  };
+  
   return (
     <div style={styles.formContainer}>
       <form style={styles.form} onSubmit={handleLogin}>

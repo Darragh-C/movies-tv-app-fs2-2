@@ -19,7 +19,7 @@ const AuthContextProvider = ({ props }) => {
     
   };
 
-  const isAuthenticated = user.username === null ? false : true;
+  const isAuthenticated = user.username === null ? false : true; 
 
   const signout = () => {
     setTimeout(() => setUser({ username: null, password: null }), 100);
