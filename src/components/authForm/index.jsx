@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
+import AuthContextProvider from '../../contexts/authContext';
 
 const styles = {
   formContainer: {
@@ -38,10 +39,19 @@ const styles = {
   }
 }
 
+const [ email, setEmail ] = useState("");
+const [ password, setPassword ] = useState("");
+const { authenticate } = useContext(AuthContextProvider);
+
+const handleLogin = (e) => {
+  e.preventDefault();
+  authenticate(username, password);
+};
+
 function authForm({ title, buttonText }) {
   return (
     <div style={styles.formContainer}>
-      <form style={styles.form}>
+      <form style={styles.form} onSubmit={handleLogin}>
         <div style={styles.formContent}>
           <p key={"-text"} style={styles.text}>{title}</p>
           <div class="field" style={styles.input}>
@@ -49,7 +59,9 @@ function authForm({ title, buttonText }) {
               key={"email-input"}
               style={styles.input}
               type="text"
-              value={"Email address"}
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div class="field" style={styles.input}>
@@ -57,7 +69,9 @@ function authForm({ title, buttonText }) {
               key={"password-input"}
               style={styles.input}
               type="text"
-              value={"Password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div class="field" style={styles.button}>
