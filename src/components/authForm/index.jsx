@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button } from '@mui/material';
-import AuthContextProvider from '../../contexts/authContext';
+import { AuthContext } from '../../contexts/authContext';
 
 const styles = {
   formContainer: {
@@ -45,19 +45,19 @@ function authForm({ title, buttonText }) {
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
-  const { authenticate } = useContext(AuthContextProvider);
+  const context = useContext(AuthContext);
   
   const handleLogin = (e) => {
     e.preventDefault();
-    authenticate(username, password);
+    context.authenticate(email, password);
   };
-  
+
   return (
     <div style={styles.formContainer}>
       <form style={styles.form} onSubmit={handleLogin}>
         <div style={styles.formContent}>
           <p key={"-text"} style={styles.text}>{title}</p>
-          <div class="field" style={styles.input}>
+          <div style={styles.input}>
             <input
               key={"email-input"}
               style={styles.input}
@@ -67,7 +67,7 @@ function authForm({ title, buttonText }) {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div class="field" style={styles.input}>
+          <div style={styles.input}>
             <input
               key={"password-input"}
               style={styles.input}
@@ -77,7 +77,7 @@ function authForm({ title, buttonText }) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div class="field" style={styles.button}>
+          <div style={styles.button}>
             <Button variant="contained" type="submit" sx={styles.button}>
               {buttonText}
             </Button>

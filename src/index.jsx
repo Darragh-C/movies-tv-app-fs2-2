@@ -22,7 +22,7 @@ import FavouriteCastPage from "./pages/favouriteCastPage";
 import MovieSearch from "./pages/movieSearch";
 import LogInPage from "./pages/logInPage";
 import AuthContextProvider from "./contexts/authContext";
-import { PrivateRoute } from "./components/privateRoute";
+import PrivateRoute from "./components/privateRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,7 +34,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => {
+const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -43,7 +43,14 @@ const App = () => {
           <MoviesContextProvider>
             <Routes>
               <Route path="/login" element={<LogInPage />} />
-              <PrivateRoute path="/fantasymovie" component={FantasyMoviePage} />
+              <Route
+                path="/fantasymovie"
+                element={
+                  <PrivateRoute>
+                    <FantasyMoviePage />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/cast/:id" element={<CastDetailsPage />} />
               <Route path="/tvshows/:seriesId/season/:seasonNum" element={<SeasonDetailsPage />} />
               <Route path="/tvshows/:id" element={<TvDetailsPage />} />

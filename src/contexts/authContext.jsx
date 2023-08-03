@@ -3,16 +3,22 @@ import testUserCredentials from "../dataStore/testUserCredentials.json";
 
 export const AuthContext = createContext(null);
 
-const AuthContextProvider = ({ props }) => {
+const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({ username: null, password: null });
 
   const authenticate = (email, password) => {
+    console.log("email:", email);
+    console.log("password:", password);
+    console.log("testUserCredentials:", testUserCredentials);
     // Validate user credentials here
-    const userCredentials = testUserCredentials.filter((user) => user.email === email);
+    const userCredentials = testUserCredentials.find((user) => user.email === email);
+    console.log("userCredentials:", userCredentials);
     const validUser = userCredentials && userCredentials.password === password;
+    console.log("validUser:", validUser);
   
     if (validUser) {
       setUser({ email, password });
+      console.log("user authenticated");
     } else {
       console.log("invalid credentials");
     }
@@ -33,7 +39,7 @@ const AuthContextProvider = ({ props }) => {
         signout,
       }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 };
