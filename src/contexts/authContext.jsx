@@ -4,7 +4,7 @@ import testUserCredentials from "../dataStore/testUserCredentials.json";
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({ username: null, password: null });
+  const [user, setUser] = useState({ email: null, password: null });
 
   const authenticate = (email, password) => {
     console.log("email:", email);

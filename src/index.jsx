@@ -46,7 +46,7 @@ const App = (props) => {
               <Route
                 path="/fantasymovie"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute path={"/fantasymovie"}>
                     <FantasyMoviePage />
                   </PrivateRoute>
                 }
