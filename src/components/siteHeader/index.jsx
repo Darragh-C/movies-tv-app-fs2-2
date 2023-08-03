@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,8 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Context from "@mui/base/Tabs/TabsContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
   title: {
@@ -26,6 +28,7 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const authContext = useContext(AuthContext);
 
   const menuOptions = [
     { label: "Movies", path: "/" },
@@ -46,6 +49,10 @@ const SiteHeader = () => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () => {
+    authContext.signout;
+  }
 
   return (
     <>
@@ -107,6 +114,13 @@ const SiteHeader = () => {
               ))}
             </>
           )}
+          <Button
+                  key={"log-out-btn"}
+                  color="inherit"
+                  onClick={(handleLogout)}
+                >
+                  {"Log out"}
+                </Button>
         </Toolbar>
       </AppBar>
       <Offset />
