@@ -1,52 +1,49 @@
 import React, { useState, useEffect, createContext } from "react";
 import testUserCredentials from "../dataStore/testUserCredentials.json";
+import fakeAuth from "../fakeAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({ email: null, password: null });
-  const [redirect, setRedirect] = useState("/");
+  const [token, setToken] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const setRedirectDestination = (destination) => {
-    setRedirect(window.location.origin + destination);
-  }
-
-  const authenticate = (email, password) => {
+  const authenticate = async (email, password) => {
     console.log("email:", email);
     console.log("password:", password);
-    console.log("testUserCredentials:", testUserCredentials);
-    // Validate user credentials here
+    
     const userCredentials = testUserCredentials.find((user) => user.email === email);
     console.log("userCredentials:", userCredentials);
     const validUser = userCredentials && userCredentials.password === password;
     console.log("validUser:", validUser);
   
     if (validUser) {
-      setUser({ email, password });
-      console.log("user authenticated");
-      return true;
+      const token = await fakeAuth(email, password);
+      setToken(token);
+      const origin = location.state?.intent?.pathname || "/";
+      navigate(origin);
+      // return true;
     } else {
       console.log("invalid credentials");
-      return false;
+      // return false;
     }
-    
   };
 
-  const isAuthenticated = user.email === null ? false : true; 
+  // const isAuthenticated = user.email === null ? false : true; 
 
   const signout = () => {
-    setTimeout(() => setUser({ email: null, password: null }), 100);
-    console.log("logoutIsAuthenticated", isAuthenticated);
+    setToken(null);
+    navigate('/')
   };
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
         authenticate,
         signout,
-        redirect,
-        setRedirectDestination,
+        token,
       }}
     >
       {children}

@@ -47,14 +47,12 @@ function authForm({ title, buttonText }) {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const context = useContext(AuthContext);
-
-  const navigate = useNavigate();
   
   const handleLogin = (e) => {
     e.preventDefault();
     const validUser = context.authenticate(email, password);
     console.log("validUser", validUser);
-    console.log("context.redirect", context.redirect);
+    // console.log("context.redirect", context.redirect);
     // validUser = context.isAuthenticated;
     
     // if (validUser) {

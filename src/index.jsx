@@ -46,7 +46,9 @@ const App = (props) => {
               <Route
                 path="/fantasymovie"
                 element={
-                  <PrivateRoute redirect={"/fantasymovie"}/>
+                  <PrivateRoute>
+                    <FantasyMoviePage/>
+                  </PrivateRoute>
                 }
               />
               <Route path="/cast/:id" element={<CastDetailsPage />} />
