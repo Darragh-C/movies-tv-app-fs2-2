@@ -38,17 +38,15 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <SiteHeader />
         <AuthContextProvider>
+          <SiteHeader />
           <MoviesContextProvider>
             <Routes>
               <Route path="/login" element={<LogInPage />} />
               <Route
                 path="/fantasymovie"
                 element={
-                  <PrivateRoute path={"/fantasymovie"}>
-                    <FantasyMoviePage />
-                  </PrivateRoute>
+                  <PrivateRoute redirect={"/fantasymovie"}/>
                 }
               />
               <Route path="/cast/:id" element={<CastDetailsPage />} />

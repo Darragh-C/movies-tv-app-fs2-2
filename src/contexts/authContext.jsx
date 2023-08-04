@@ -5,6 +5,11 @@ export const AuthContext = createContext(null);
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({ email: null, password: null });
+  const [redirect, setRedirect] = useState("/");
+
+  const setRedirectDestination = (destination) => {
+    setRedirect(window.location.origin + destination);
+  }
 
   const authenticate = (email, password) => {
     console.log("email:", email);
@@ -19,16 +24,19 @@ const AuthContextProvider = ({ children }) => {
     if (validUser) {
       setUser({ email, password });
       console.log("user authenticated");
+      return true;
     } else {
       console.log("invalid credentials");
+      return false;
     }
     
   };
 
-  const isAuthenticated = user.username === null ? false : true; 
+  const isAuthenticated = user.email === null ? false : true; 
 
   const signout = () => {
-    setTimeout(() => setUser({ username: null, password: null }), 100);
+    setTimeout(() => setUser({ email: null, password: null }), 100);
+    console.log("logoutIsAuthenticated", isAuthenticated);
   };
 
   return (
@@ -37,6 +45,8 @@ const AuthContextProvider = ({ children }) => {
         isAuthenticated,
         authenticate,
         signout,
+        redirect,
+        setRedirectDestination,
       }}
     >
       {children}

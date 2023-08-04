@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Button } from '@mui/material';
 import { AuthContext } from '../../contexts/authContext';
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   formContainer: {
@@ -46,10 +47,20 @@ function authForm({ title, buttonText }) {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const context = useContext(AuthContext);
+
+  const navigate = useNavigate();
   
   const handleLogin = (e) => {
     e.preventDefault();
-    context.authenticate(email, password);
+    const validUser = context.authenticate(email, password);
+    console.log("validUser", validUser);
+    console.log("context.redirect", context.redirect);
+    // validUser = context.isAuthenticated;
+    
+    // if (validUser) {
+    //   // navigate(`/${context.redirect}`);
+    //   navigate("/");
+    // }
   };
 
   return (

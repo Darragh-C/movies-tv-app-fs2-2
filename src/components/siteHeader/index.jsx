@@ -51,7 +51,7 @@ const SiteHeader = () => {
   };
 
   const handleLogout = () => {
-    authContext.signout;
+    authContext.signout();
   }
 
   return (
